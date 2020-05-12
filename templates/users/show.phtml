@@ -1,0 +1,16 @@
+<!--<form action='/users' method='get'>
+<input type='search' name='term' value = >
+<input type='submit' value='Найти'>
+</form> -->
+<div>
+<?php var_dump($users)?>
+</div>
+<?php foreach ($users as $user) : ?>
+<div><?= $user['id'] ?>
+</div>
+<div><?= $user['name'] ?>
+</div>
+<div><?= $user['email'] ?>
+</div>
+<?php endforeach ?>
+<a href='/users/new'>Создать пользователя</a>
