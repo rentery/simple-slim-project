@@ -40,10 +40,13 @@ $app->post('/users', function ($request, $response) use ($router) {
     $errors = $validator->validate($user);
     if (count($errors) == 0) {
         $user['id'] = uniqid();
-        setUser($user);
+        $users = json_decode($request->getCookieParam('users', json_encode([])), true);
+        $users[] = $user;
+        $encodedUsers = json_encode($users);
         $this->get('flash')->addMessage('succes', 'User added');
         $url = $router->urlFor('users');
-        return $response->withRedirect($url, 302);
+        return $response->withHeader('Set-cookie', "users={$encodedUsers}")
+                        ->withRedirect($url, 302);
     }
     $params = [
         'user' => $user,
@@ -53,7 +56,7 @@ $app->post('/users', function ($request, $response) use ($router) {
 });
 
 $app->get('/users', function ($request, $response) {
-    $users = getUsers();
+    $users = json_decode($request->getCookieParam('users', json_encode([])), true);
     $flash = $this->get('flash')->getMessages();
     $params = [
         'users' => $users,
@@ -64,7 +67,7 @@ $app->get('/users', function ($request, $response) {
 
 $app->get('/users/{id}', function ($request, $response, $args) {
     $id = $args['id'];
-    $users = getUsers();
+    $users = json_decode($request->getCookieParam('users', json_decode([])), true);
     $user = collect($users)->firstWhere('id', $id);
     if (!$user) {
         return $response->withStatus(404)->write('Page not found');
