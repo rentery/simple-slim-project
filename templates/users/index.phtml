@@ -1,0 +1,22 @@
+<?php if (isset($flash)): ?>
+    <?php foreach ($flash as $status => $messages): ?>
+        <?php foreach ($messages as $message): ?>
+            <?= $status ?>: <?= $message ?>
+        <?php endforeach ?>
+    <?php endforeach ?>
+<?php endif ?>
+
+<?php foreach ($users as $user) : ?>
+<table>
+    <tr>
+        <td>
+            <a href='users/<?= $user['id'] ?>'><?= htmlspecialchars($user['name']) ?></a>
+        </td>
+        <td>
+            <?= htmlspecialchars($user['email']) ?>
+        </td>
+    </tr>
+</table>
+<?php endforeach ?>
+
+<a href='/users/new'>Создать пользователя</a>

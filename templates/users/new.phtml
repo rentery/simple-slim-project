@@ -2,18 +2,24 @@
 <div>
     <label>
         Имя
-        <input type='text' required name='user[name]'>
+        <input type='text' name='user[name]' value ='<?= htmlspecialchars($user['name'])?>'>
     </label>
 </div>
+<?php if(!empty($errors['name'])): ?>
+    <?= $errors['name']?>
+<?php endif ?>
 <div>
     <label>
         Email
-        <input type='email' required name='user[email]'>
+        <input type='email' required name='user[email]' value='<?= htmlspecialchars($user['email'])?>'>
     </label>
 </div>
+<?php if(!empty($errors['email'])): ?>
+    <?= $errors['email']?>
+<?php endif ?>
 <div>
     <label>
-        <input type='submit' value='Подтвердить'>
+        <input type='submit' value='Создать'>
     </label>
 </div>
 </form>
