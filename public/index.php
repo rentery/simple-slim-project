@@ -79,4 +79,8 @@ $app->get('/users/{id}', function ($request, $response, $args) {
     
 })->setName('user');
 
+$app->get('/', function ($request, $response) {
+    return $this->get('renderer')->render($response, 'index.phtml');
+});
+
 $app->run();
